@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployments
+spec:
+  selector:
+    matchLabels:
+      component: nginx
+      company: KodeKloud
+  template:
+    metadata:
+      labels:
+        component: nginx
+        company: KodeKloud
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
