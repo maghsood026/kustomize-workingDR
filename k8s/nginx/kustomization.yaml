@@ -3,7 +3,17 @@ kind: Kustomization
 
 resources:
   - nginx-dpl.yaml
-  - ngnix-svc.yaml
+  - nginx-svc.yaml
 
 commonLabels:
   app: kubernetes-app
+namePrefix: app-name-
+nameSuffix: -dev
+commonAnnotations:
+  ann: kuber-ann
+
+images:
+  - name: nginx
+    newName: haproxy
+    newTag: "2.0"
+namespace: notDefault
