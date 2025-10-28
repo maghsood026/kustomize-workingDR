@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: nginx-deployments
 spec:
+  replicas: 1
   selector:
     matchLabels:
       component: nginx

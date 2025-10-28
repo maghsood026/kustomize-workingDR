@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - db-sts.yaml
+  - db-svc.yaml
+
+namespace: notDefault
+
+patches: # json 6902 patch
+  - target:
+      kind: StatefulSet
+      name: postgres
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: postgres-sts
+      - op: replace
+        path: /spec/replicas
+        value: 0
+  - path: db-sts-patch.yaml

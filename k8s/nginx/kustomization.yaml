@@ -7,8 +7,8 @@ resources:
 
 commonLabels:
   app: kubernetes-app
-namePrefix: app-name-
-nameSuffix: -dev
+# namePrefix: app-name-
+# nameSuffix: -dev
 commonAnnotations:
   ann: kuber-ann
 
@@ -16,4 +16,26 @@ images:
   - name: nginx
     newName: haproxy
     newTag: "2.0"
+
 namespace: notDefault
+
+patches: # json 6902 patch
+  - target:
+      kind: Deployment
+      name: nginx-deployments
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: web-deployment
+      - op: replace
+        path: /spec/replicas
+        value: 3
+  - patch: |- # strategic merge patch
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: nginx-deployments
+      spec:
+        replicas: 2
+  # - patch: # add operation
+  # - patch: # remove operation
